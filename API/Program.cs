@@ -1,6 +1,10 @@
 using Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MediatR;
+using Application.Activities;
+using AutoMapper;
+using Application.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +43,10 @@ catch (System.Exception ex)
     // throw;
 }
 
+// tells MediatR where to find the needed handlers
+// needed because List.Handler is compiled to another assembly than this
+builder.Services.AddMediatR(typeof(List.Handler).Assembly);
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 
